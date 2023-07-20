@@ -1,0 +1,19 @@
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  build:
+    name: Build and publish container image
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.5.3
+      
+      - name: Install Podman
+        uses: gacts/install-podman@v1.1.0
+        
+      - name: Build
+        run: podman build -t gitit .
