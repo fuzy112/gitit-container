@@ -3,6 +3,9 @@ on:
     branches:
       - main
       
+env:
+  IMAGE_NAME: gitit
+
 jobs:
   build:
     name: Build and publish container image
@@ -16,7 +19,7 @@ jobs:
         uses: gacts/install-podman@v1.1.0
         
       - name: Build
-        run: podman build -t gitit .
+        run: podman build -t $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}" .
 
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u $ --password-stdin
