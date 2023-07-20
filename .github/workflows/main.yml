@@ -1,8 +1,11 @@
 on:
-  push:
-    branches:
-      - main
-      
+  workflow_dispatch:
+    inputs:
+      version:
+        description: version of gitit deb package
+        type: string
+        required: true
+
 env:
   IMAGE_NAME: gitit
 
@@ -35,4 +38,8 @@ jobs:
           echo VERSION=$VERSION
           podman tag $IMAGE_NAME $IMAGE_ID:$VERSION
           podman push $IMAGE_ID:$VERSION
-  
+          
+          VERSION="${{ inputs.version }}"
+          echo VERSION=$VERSION
+          podman tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          podman push $IMAGE_ID:$VERSION
